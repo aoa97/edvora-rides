@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import { ThemeProvider } from "styled-components";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import Header from "./components/Header";
+import Container from "./components/styles/Container.styled";
+import GlobalStyle from "./components/styles/Global.styled";
+import NeasrestRides from "./pages/NearestRides";
+import PastRides from "./pages/PastRides";
+import UpcomingRides from "./pages/UpcomingRides";
+import Navbar from "./components/Navbar";
+import { StoreProvider } from "./context/AppContext.js";
+
+const theme = {
+  colors: {
+    header: "#101010",
+    body: "#292929",
+    rideItem: "#171717",
+    rideItemTag: "#000",
+    filterMenu: "#131313",
+    filterMenuItem: "#232323",
+  },
+};
+
+const App = () => (
+  <StoreProvider>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <Header />
+      <Router>
+        <Container>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<NeasrestRides />} />
+            <Route path="/upcoming-rides" element={<UpcomingRides />} />
+            <Route path="/past-rides" element={<PastRides />} />
+          </Routes>
+        </Container>
+      </Router>
+    </ThemeProvider>
+  </StoreProvider>
+);
 
 export default App;
