@@ -8,7 +8,7 @@ import NeasrestRides from "./pages/NearestRides";
 import PastRides from "./pages/PastRides";
 import UpcomingRides from "./pages/UpcomingRides";
 import Navbar from "./components/Navbar";
-import { StoreProvider } from "./context/AppContext.js";
+import useFetch from "./hooks/useFetch";
 
 const theme = {
   colors: {
@@ -21,23 +21,32 @@ const theme = {
   },
 };
 
-const App = () => (
-  <StoreProvider>
+const App = () => {
+  const { loading, rides, error } = useFetch();
+  return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <Header />
       <Router>
         <Container>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<NeasrestRides />} />
-            <Route path="/upcoming-rides" element={<UpcomingRides />} />
-            <Route path="/past-rides" element={<PastRides />} />
-          </Routes>
+          {loading ? (
+            <h1>Loading ..</h1>
+          ) : error ? (
+            <h1>There's something wrong.</h1>
+          ) : (
+            <>
+              <Navbar />
+              <Routes>
+                <Route path="/" element={<NeasrestRides rides={rides} />} />
+                <Route path="/upcoming-rides" element={<UpcomingRides />} />
+                <Route path="/past-rides" element={<PastRides />} />
+              </Routes>
+            </>
+          )}
         </Container>
       </Router>
     </ThemeProvider>
-  </StoreProvider>
-);
+  );
+};
 
 export default App;

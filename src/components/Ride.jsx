@@ -1,6 +1,6 @@
 import StyledRide from "./styles/Rides.styled";
 
-const Ride = () => {
+const Ride = ({ ride }) => {
   return (
     <StyledRide>
       {/* Left */}
@@ -9,16 +9,16 @@ const Ride = () => {
 
         <div className="ride-details">
           <p>
-            Ride Id: <span>002</span>
+            Ride Id: <span>{ride.id}</span>
           </p>
           <p>
-            Origin Station: <span>20</span>
+            Origin Station: <span>{ride.origin_station_code}</span>
           </p>
           <p>
-            station_path: <span>[20, 39, 40, 42, 54, 63, 72, 88, 98]</span>
+            station_path: <span>[{String(ride.station_path)}]</span>
           </p>
           <p>
-            Date: <span>15th Feb 2022 16:33</span>
+            Date: <span>{ride.date}</span>
           </p>
           <p>
             Distance: <span>0</span>
@@ -28,8 +28,8 @@ const Ride = () => {
 
       {/* Right */}
       <div className="ride-tags">
-        <span className="ride-tag">City Name</span>
-        <span className="ride-tag">State Name</span>
+        <span className="ride-tag">{ride.city}</span>
+        <span className="ride-tag">{ride.state}</span>
       </div>
     </StyledRide>
   );
